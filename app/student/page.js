@@ -1,7 +1,9 @@
 "use client"
-import NavigationBar from '@/components/Navigation'
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
+
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -16,8 +18,8 @@ import Footer from '@/components/Footer';
 
 
 
-
 const page = () => {
+
   const cardsForIntroScreenData = [
     "bsc-student.png.webp",
     "city_launch_sept23-student.png.webp",
@@ -27,14 +29,18 @@ const page = () => {
     "straive-student.png.webp"
 
   ]
+
+  const router = useRouter();
+  const { isAuthenticated } = useSelector((state) => state.studentReducer);
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/student/auth");
+
+    }
+  }, [isAuthenticated]);
+
   return (
-    <div>
-
-      <NavigationBar>
-
-      </NavigationBar>
-
-
+    <div className=''>
       <div id='SwiperCardsForIntroScreen' className='mt-5'>
 
         <div id='main-heading ' className='mt-5'>
@@ -68,7 +74,7 @@ const page = () => {
         </Swiper>
       </div>
 
-      <div id="footerbg" className='mt-5 p-3' style={{ backgroundImage: 'url("footer_bg_1920.webp")' }}>
+      <div id="footerbg" className='mt-5 p-4' style={{ backgroundImage: 'url("footer_bg_1920.webp")' }}>
         <h3> Empower your career with Internshala today</h3>
 
         <form className="d-flex gap-2 " role="search">
@@ -79,7 +85,6 @@ const page = () => {
         </form>
       </div>
 
-      <Footer ></Footer>
     </div>
   )
 }
